@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="summoner"
+            type="com.ranseo.lolalarm.data.Summoner" />
+
+        <variable
+            name="clickListener"
+            type="com.ranseo.lolalarm.alarm.adapter.click.ClickSearchItemListener" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="@{()->clickListener.onClick(summoner)}"
+        android:padding="12dp">
+
+
+
+
+        <ImageView
+            android:id="@+id/iv_profile"
+            android:layout_width="52dp"
+            android:layout_height="52dp"
+            android:background="@drawable/layer_list_profile_circle"
+            android:clipToOutline="true"
+            android:scaleType="fitCenter"
+            tools:src="@drawable/ic_launcher_background"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+
+        <TextView
+            android:text="@{summoner.name}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            app:layout_constraintStart_toEndOf="@+id/iv_profile"
+            app:layout_constraintTop_toTopOf="@+id/iv_profile"
+            android:layout_marginStart="12dp"
+            tools:text="사랑이란"/>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

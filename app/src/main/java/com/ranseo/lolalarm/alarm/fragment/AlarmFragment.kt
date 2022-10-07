@@ -30,8 +30,17 @@ class AlarmFragment : Fragment() {
         binding.rvAlarm.adapter = alarmListAdapter
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
+
+        viewModel.lists.observe(viewLifecycleOwner) {
+            it?.let{ list ->
+                alarmListAdapter.submitList(list)
+            }
+        }
+
         return binding.root
     }
+
+
 
 
 }

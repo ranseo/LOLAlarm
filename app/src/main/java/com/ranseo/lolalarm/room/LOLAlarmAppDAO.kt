@@ -8,7 +8,7 @@ import com.ranseo.lolalarm.data.TargetPlayer
 
 @Dao
 interface AlarmDAO {
-    @Query("SELECT * FROM target_player_table ORDER BY id DESC")
+    @Query("SELECT * FROM target_player_table ORDER BY playerId DESC")
     fun getAll() : LiveData<List<TargetPlayer>>
 }
 

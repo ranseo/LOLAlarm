@@ -7,6 +7,8 @@
             name="viewModel"
             type="com.ranseo.lolalarm.alarm.viewmodel.AlarmViewModel" />
 
+        <import type="android.view.View"/>
+
     </data>
 
     <FrameLayout
@@ -14,7 +16,18 @@
         android:layout_height="match_parent"
         tools:context=".alarm.fragment.AlarmFragment">
 
+        <TextView
+            android:visibility="@{viewModel.emptyList ? View.GONE : View.VISIBLE}"
+            android:text="리스트가\n비어 있습니다."
+            android:textSize="54sp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textAlignment="center"
+            android:gravity="center"
+            />
+
         <androidx.recyclerview.widget.RecyclerView
+            android:visibility="@{viewModel.emptyList ? View.VISIBLE : View.GONE}"
             android:id="@+id/rv_alarm"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>

@@ -14,23 +14,23 @@ import javax.inject.Singleton
 
 @InstallIn(SingletonComponent::class)
 @Module
-class RoomDatabaseModule {
-    @Volatile
-    private var INSTANCE : LOLAlarmAppDatabase? = null
+object RoomDatabaseModule {
 
     @Provides
     @Singleton
-    fun provideDatabase(@ApplicationContext context: Context): LOLAlarmAppDatabase =
-        Room.databaseBuilder(
-            context.applicationContext,
+    fun provideDatabase(@ApplicationContext context: Context): LOLAlarmAppDatabase {
+        return Room.databaseBuilder(
+            context,
             LOLAlarmAppDatabase::class.java,
-            "lol_alarm_database")
-        .fallbackToDestructiveMigration()
-        .build()
+            "lol_alarm_database"
+        )
+            .fallbackToDestructiveMigration()
+            .build()
+    }
 
     @Provides
-    fun provideAlarmDao(database: LOLAlarmAppDatabase) : AlarmDAO = database.alarmDao
+    fun provideAlarmDao(database: LOLAlarmAppDatabase): AlarmDAO = database.alarmDao()
 
     @Provides
-    fun provideSearchDao(database: LOLAlarmAppDatabase) : SearchDAO = database.searchDao
+    fun provideSearchDao(database: LOLAlarmAppDatabase): SearchDAO = database.searchDao()
 }

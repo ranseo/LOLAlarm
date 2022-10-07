@@ -7,9 +7,9 @@ import androidx.room.RoomDatabase
 import com.ranseo.lolalarm.data.Summoner
 import com.ranseo.lolalarm.data.TargetPlayer
 
-@Database(entities = [TargetPlayer::class, Summoner::class], version = 1, exportSchema = false)
+@Database(entities = [TargetPlayer::class], version = 2, exportSchema = false)
 abstract class LOLAlarmAppDatabase : RoomDatabase() {
-    abstract val alarmDao : AlarmDAO
-    abstract val searchDao : SearchDAO
+    abstract fun alarmDao() : AlarmDAO
+    abstract fun searchDao() : SearchDAO
 
 }
