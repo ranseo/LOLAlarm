@@ -7,32 +7,33 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.ranseo.lolalarm.data.TargetPlayer
 import com.ranseo.lolalarm.databinding.AlarmListItemBinding
+import com.ranseo.lolalarm.util.ProfileImage
 import javax.inject.Inject
 
-class AlarmListAdapter @Inject constructor() : ListAdapter<TargetPlayer, AlarmListAdapter.SearchViewHolder>(TargetPlayer.getItemCallback()){
+class AlarmListAdapter @Inject constructor() : ListAdapter<TargetPlayer, AlarmListAdapter.AlarmViewHolder>(TargetPlayer.getItemCallback()){
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchViewHolder {
-        return SearchViewHolder.from(parent)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AlarmViewHolder {
+        return AlarmViewHolder.from(parent)
     }
 
 
-    override fun onBindViewHolder(holder: SearchViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: AlarmViewHolder, position: Int) {
         val item = getItem(position)
         holder.bind(item)
     }
 
-
-
-    class SearchViewHolder(val binding: AlarmListItemBinding) : RecyclerView.ViewHolder(binding.root) {
+    
+    class AlarmViewHolder(val binding: AlarmListItemBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item:TargetPlayer) {
             binding.targetPlayer = item
+            ProfileImage.setProfileImageView(ProfileImage.getProfileImageUrl(item.summoner.profileIconId), binding.root, binding.ivProfile)
         }
 
         companion object {
-            fun from(parent: ViewGroup): SearchViewHolder {
+            fun from(parent: ViewGroup): AlarmViewHolder {
                 val layoutInflater = LayoutInflater.from(parent.context)
                 val binding = AlarmListItemBinding.inflate(layoutInflater, parent, false)
-                return SearchViewHolder(binding)
+                return AlarmViewHolder(binding)
             }
         }
     }

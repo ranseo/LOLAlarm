@@ -25,6 +25,10 @@
             </intent-filter>
 
         </activity>
+
+        <service android:name=".MonitorService"
+            android:exported="false"
+            />
     </application>
 
 </manifest>

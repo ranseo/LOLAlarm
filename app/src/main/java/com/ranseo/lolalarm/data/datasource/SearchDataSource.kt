@@ -1,8 +1,12 @@
-package com.ranseo.lolalarm.data
+package com.ranseo.lolalarm.data.datasource
 
 import com.ranseo.lolalarm.BuildConfig
+import com.ranseo.lolalarm.data.Summoner
+import com.ranseo.lolalarm.data.TargetPlayer
 import com.ranseo.lolalarm.network.LOLApiService
-import com.ranseo.lolalarm.room.SearchDAO
+import com.ranseo.lolalarm.room.AlarmDAO
+import com.ranseo.lolalarm.util.LogType
+import com.ranseo.lolalarm.util.log
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -10,12 +14,13 @@ import javax.inject.Singleton
 
 @Singleton
 class SearchDataSource @Inject constructor(
-    private val searchDAO: SearchDAO,
+    private val alarmDAO: AlarmDAO,
     private val lolApiService: LOLApiService
 ) {
     suspend fun insertTargetPlayer(targetPlayer: TargetPlayer) {
         withContext(Dispatchers.IO) {
-            searchDAO.insertTargetPlayer(targetPlayer)
+            log("SEARCH_DATASOURCE", "InsertTargetPlayer : ${targetPlayer.toString()}", LogType.I)
+            alarmDAO.insertTargetPlayer(targetPlayer)
         }
     }
 

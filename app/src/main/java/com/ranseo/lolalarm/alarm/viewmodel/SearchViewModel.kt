@@ -1,5 +1,6 @@
 package com.ranseo.lolalarm.alarm.viewmodel
 
+import android.text.Editable
 import androidx.lifecycle.*
 import com.ranseo.lolalarm.data.Summoner
 import com.ranseo.lolalarm.data.TargetPlayer
@@ -23,7 +24,7 @@ class SearchViewModel @Inject constructor(
 
 
     private val _summoners = MutableLiveData<List<Summoner>>()
-    val summoners : LiveData<List<Summoner>>
+    val summoners: LiveData<List<Summoner>>
         get() = _summoners
 
     fun getSummonerList(summonerName: String) {
@@ -32,11 +33,13 @@ class SearchViewModel @Inject constructor(
         }
     }
 
-    fun searchSummoner(c: CharSequence) {
-        _summonerName.value = c.toString()
+    fun searchSummoner(s: String) {
+        _summonerName.value = s
     }
 
     fun insertTargetPlayer(summoner: Summoner) {
-        searchRepositery.insertTargetPlayer(TargetPlayer(summoner = summoner))
+        viewModelScope.launch {
+            searchRepositery.insertTargetPlayer(TargetPlayer(targetId = summoner.id, summoner = summoner))
+        }
     }
 }

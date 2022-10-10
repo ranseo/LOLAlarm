@@ -22,17 +22,11 @@ object LOLApiServiceModule {
     fun provideBaseUrl() : String = NetworkURL.LOL_API_BASE_URL
 
     @Provides
-    fun provideMoshi() : Moshi {
-        return Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
-    }
-
-    @Provides
     @Singleton
-    fun provideRetrofit() : Retrofit {
-        val moshiConverter = MoshiConverterFactory.create()
+    fun provideRetrofit(moshi:Moshi) : Retrofit {
         return Retrofit.Builder()
             .baseUrl(provideBaseUrl())
-            .addConverterFactory(MoshiConverterFactory.create(provideMoshi()))
+            .addConverterFactory(MoshiConverterFactory.create(moshi))
             .build()
     }
 

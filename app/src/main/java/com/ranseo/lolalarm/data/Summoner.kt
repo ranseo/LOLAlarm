@@ -4,18 +4,20 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
-
+@JsonClass(generateAdapter = true)
 data class Summoner(
-    @Json(name="id")
+    @PrimaryKey
+    @field:Json(name="id")
     val id: String,
-    @Json(name="accountId")
+    @field:Json(name="accountId")
     val accountId: String,
-    @Json(name="puuid")
+    @field:Json(name="puuid")
     val puuid: String,
-    @Json(name="name")
+    @field:Json(name="name")
     val name: String,
-    @Json(name="profileIconId")
+    @field:Json(name="profileIconId")
     val profileIconId: Int
 ) {
     companion object {
