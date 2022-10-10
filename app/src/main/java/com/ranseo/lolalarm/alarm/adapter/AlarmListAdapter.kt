@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.ranseo.lolalarm.data.TargetPlayer
 import com.ranseo.lolalarm.databinding.AlarmListItemBinding
+import com.ranseo.lolalarm.util.ProfileImage
 import javax.inject.Inject
 
 class AlarmListAdapter @Inject constructor() : ListAdapter<TargetPlayer, AlarmListAdapter.AlarmViewHolder>(TargetPlayer.getItemCallback()){
@@ -21,11 +22,11 @@ class AlarmListAdapter @Inject constructor() : ListAdapter<TargetPlayer, AlarmLi
         holder.bind(item)
     }
 
-
-
+    
     class AlarmViewHolder(val binding: AlarmListItemBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item:TargetPlayer) {
             binding.targetPlayer = item
+            ProfileImage.setProfileImageView(ProfileImage.getProfileImageUrl(item.summoner.profileIconId), binding.root, binding.ivProfile)
         }
 
         companion object {

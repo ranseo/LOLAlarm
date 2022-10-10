@@ -6,19 +6,20 @@
     <data>
 
         <variable
-            name="targetPlayer"
-            type="com.ranseo.lolalarm.data.TargetPlayer" />
+            name="summoner"
+            type="com.ranseo.lolalarm.data.Summoner" />
 
-        <import type="android.view.View"/>
+        <variable
+            name="clickListener"
+            type="com.ranseo.lolalarm.alarm.adapter.click.ClickSearchItemListener" />
 
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:onClick="@{()->clickListener.onClick(summoner)}"
         android:padding="12dp">
-
-
 
 
         <ImageView
@@ -35,7 +36,7 @@
 
 
         <TextView
-            android:text="@{targetPlayer.summoner.name}"
+            android:text="@{summoner.name}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="18sp"
@@ -44,23 +45,6 @@
             android:layout_marginStart="12dp"
             tools:text="사랑이란"/>
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btn_start"
-            android:text="시작"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btn_stop"
-            android:text="중지"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

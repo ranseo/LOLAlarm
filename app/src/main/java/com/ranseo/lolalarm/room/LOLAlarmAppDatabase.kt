@@ -1,15 +1,14 @@
 package com.ranseo.lolalarm.room
 
 import android.content.Context
-import androidx.room.Database
-import androidx.room.Room
-import androidx.room.RoomDatabase
+import androidx.room.*
+import com.ranseo.lolalarm.data.GameInfo
+import com.ranseo.lolalarm.data.Spectator
 import com.ranseo.lolalarm.data.Summoner
 import com.ranseo.lolalarm.data.TargetPlayer
 
-@Database(entities = [TargetPlayer::class, Summoner::class], version = 1, exportSchema = false)
+@Database(entities = [TargetPlayer::class, GameInfo::class], version = 6, exportSchema = false)
+@TypeConverters(SpectatorConverter::class, SummonerConverter::class, ListCurrentGameParticipantConverter::class)
 abstract class LOLAlarmAppDatabase : RoomDatabase() {
-    abstract val alarmDao : AlarmDAO
-    abstract val searchDao : SearchDAO
-
+    abstract fun alarmDao() : AlarmDAO
 }

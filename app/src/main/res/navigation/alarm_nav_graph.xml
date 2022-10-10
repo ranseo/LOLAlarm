@@ -1,6 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/alarm_nav_graph">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/alarm_nav_graph"
+    app:startDestination="@id/alarm_fragment">
+
+    <fragment
+        android:id="@+id/alarm_fragment"
+        android:name="com.ranseo.lolalarm.alarm.fragment.AlarmFragment"
+        tools:layout="@layout/fragment_alarm"
+        >
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/search_fragment"
+        android:name="com.ranseo.lolalarm.alarm.fragment.SearchFragment"
+        tools:layout="@layout/fragment_search">
+
+    </fragment>
 
 </navigation>
