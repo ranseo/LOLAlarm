@@ -16,7 +16,7 @@ data class GameInfo (
     val spectator : Spectator,
     @field:Json(name="timeStamp")
     @ColumnInfo(name = "time_stamp")
-    val timeStamp : Long
+    val timeStamp : String
 ) {
 
 }

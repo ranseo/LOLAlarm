@@ -14,7 +14,7 @@ data class TargetPlayer(
     @field:Json(name ="targetId")
     @PrimaryKey val targetId: String,
     @field:Json(name = "summoner")
-    @Embedded val summoner: Summoner
+    val summoner: Summoner
 ) {
     companion object {
         private val itemCallback = object : DiffUtil.ItemCallback<TargetPlayer>() {
