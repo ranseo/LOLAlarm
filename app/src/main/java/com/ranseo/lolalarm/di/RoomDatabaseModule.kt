@@ -16,32 +16,42 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 @Module
 object RoomDatabaseModule {
-//
-//    @Provides
-//    fun providesSummonerConverter(moshi:Moshi) : SummonerConverter = SummonerConverter(moshi)
-//
-//    @Provides
-//    fun providesSpectatorConverter(moshi:Moshi) : SpectatorConverter = SpectatorConverter(moshi)
-//
-//    @Provides
-//    fun providesListCurrentGameParticipantConverter(moshi:Moshi) : ListCurrentGameParticipantConverter = ListCurrentGameParticipantConverter(moshi)
+
 
     @Provides
     @Singleton
-    fun provideDatabase(@ApplicationContext context: Context, moshi: Moshi)
-    : LOLAlarmAppDatabase {
+    fun provideDatabase(
+        @ApplicationContext context: Context,
+        spectatorConverter: SpectatorConverter,
+        summonerConverter: SummonerConverter,
+        participantsConverter: ParticipantsConverter
+    ): LOLAlarmAppDatabase {
         return Room.databaseBuilder(
             context,
             LOLAlarmAppDatabase::class.java,
             "lol_alarm_database"
         )
-            .addTypeConverter(SummonerConverter(moshi))
-            .addTypeConverter(SpectatorConverter(moshi))
-            .addTypeConverter(ListCurrentGameParticipantConverter(moshi))
             .fallbackToDestructiveMigration()
+            .addTypeConverter(participantsConverter)
+            .addTypeConverter(spectatorConverter)
+            .addTypeConverter(summonerConverter)
             .build()
     }
 
     @Provides
     fun provideAlarmDao(database: LOLAlarmAppDatabase): AlarmDAO = database.alarmDao()
+
+    @Provides
+    @Singleton
+    fun providesSummonerConverter(moshi: Moshi): SummonerConverter = SummonerConverter(moshi)
+
+    @Provides
+    @Singleton
+    fun providesSpectatorConverter(moshi: Moshi): SpectatorConverter = SpectatorConverter(moshi)
+
+    @Provides
+    @Singleton
+    fun providesParticipantsConverter(moshi: Moshi): ParticipantsConverter =
+        ParticipantsConverter(moshi)
+
 }

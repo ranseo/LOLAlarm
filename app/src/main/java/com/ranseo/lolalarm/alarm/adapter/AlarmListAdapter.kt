@@ -11,7 +11,7 @@ import com.ranseo.lolalarm.databinding.AlarmListItemBinding
 import com.ranseo.lolalarm.util.ProfileImage
 import javax.inject.Inject
 
-class AlarmListAdapter @Inject constructor(val clickAlarmItemListener: ClickAlarmItemListener) : ListAdapter<TargetPlayer, AlarmListAdapter.AlarmViewHolder>(TargetPlayer.getItemCallback()){
+class AlarmListAdapter(private val clickAlarmItemListener: ClickAlarmItemListener) : ListAdapter<TargetPlayer, AlarmListAdapter.AlarmViewHolder>(TargetPlayer.getItemCallback()){
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AlarmViewHolder {
@@ -29,20 +29,21 @@ class AlarmListAdapter @Inject constructor(val clickAlarmItemListener: ClickAlar
         fun bind(item:TargetPlayer, onClickListener:ClickAlarmItemListener) {
             binding.targetPlayer = item
             binding.onClickListener = onClickListener
-            binding.flag = false
+            binding.flag = true
             binding.btnStart.setOnClickListener {
-                setBtnOnClickListener(onClickListener,true)
+                setBtnOnClickListener(onClickListener,false,item)
             }
             binding.btnStop.setOnClickListener {
                 onClickListener.onClickListener(binding.targetPlayer)
-                setBtnOnClickListener(onClickListener,false)
+                setBtnOnClickListener(onClickListener,true, item)
             }
 
             ProfileImage.setProfileImageView(ProfileImage.getProfileImageUrl(item.summoner.profileIconId), binding.root, binding.ivProfile)
         }
 
-        private fun setBtnOnClickListener(onClickListener: ClickAlarmItemListener, flag: Boolean) {
-            onClickListener.onClickListener(binding.targetPlayer)
+        private fun setBtnOnClickListener(onClickListener: ClickAlarmItemListener, flag: Boolean, item:TargetPlayer) {
+            if(!flag) onClickListener.onClick(item)
+            else onClickListener.onClick(null)
             binding.flag = flag
         }
 

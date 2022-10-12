@@ -2,7 +2,6 @@ package com.ranseo.lolalarm.room
 
 import androidx.room.ProvidedTypeConverter
 import androidx.room.TypeConverter
-import com.ranseo.lolalarm.data.CurrentGameParticipant
 import com.ranseo.lolalarm.data.Spectator
 import com.ranseo.lolalarm.data.Summoner
 import com.squareup.moshi.JsonAdapter
@@ -44,19 +43,20 @@ class SpectatorConverter @Inject constructor(private val moshi:Moshi) {
 }
 
 @ProvidedTypeConverter
-class ListCurrentGameParticipantConverter @Inject constructor(private val moshi:Moshi) {
+class ParticipantsConverter @Inject constructor(private val moshi:Moshi) {
 
     @TypeConverter
-    fun fromString(value: String) : List<CurrentGameParticipant>? {
-        val listType= Types.newParameterizedType(List::class.java, CurrentGameParticipant::class.java)
-        val adapter : JsonAdapter<List<CurrentGameParticipant>> = moshi.adapter(listType)
+    fun fromString(value: String) : List<Spectator.CurrentGameParticipant?>? {
+        val listType= Types.newParameterizedType(List::class.java, Spectator.CurrentGameParticipant::class.java)
+        val adapter : JsonAdapter<List<Spectator.CurrentGameParticipant>> = moshi.adapter(listType)
         return adapter.fromJson(value)
     }
 
     @TypeConverter
-    fun fromSummoner(currentGameParticipant: List<CurrentGameParticipant>) : String {
-        val listType= Types.newParameterizedType(List::class.java, CurrentGameParticipant::class.java)
-        val adapter : JsonAdapter<List<CurrentGameParticipant>> = moshi.adapter(listType)
+    fun fromParticipants(currentGameParticipant: List<Spectator.CurrentGameParticipant>) : String {
+        val listType= Types.newParameterizedType(List::class.java, Spectator.CurrentGameParticipant::class.java)
+        val adapter : JsonAdapter<List<Spectator.CurrentGameParticipant>> = moshi.adapter(listType)
         return adapter.toJson(currentGameParticipant)
     }
 }
+

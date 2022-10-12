@@ -8,17 +8,16 @@ import android.os.Build
 import android.os.IBinder
 import androidx.annotation.CallSuper
 import androidx.core.app.NotificationCompat
-import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.lifecycle.LifecycleService
 import androidx.lifecycle.lifecycleScope
 import com.ranseo.lolalarm.alarm.AlarmActivity
 import com.ranseo.lolalarm.data.GameInfo
 import com.ranseo.lolalarm.data.Spectator
 import com.ranseo.lolalarm.data.datasource.MonitorDataSource
-import com.ranseo.lolalarm.network.LOLApiService
 import com.ranseo.lolalarm.util.DateTime
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.*
+import java.time.Duration
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -62,13 +61,17 @@ class MonitorService : LifecycleService() {
 
     private fun startMonitor(intent: Intent) {
         lifecycleScope.launch(Dispatchers.IO) {
-            val summonerName = intent.data.toString()
-            monitorDataSource.moniterTargetPlayer(summonerName) { spectator ->
-                if (spectator != null) {
-                    val date = DateTime.getNowDate()
-                    insertGameInfo(spectator, date)
-                    notifyForUser(summonerName, date)
+            while (true) {
+                val summonerName = intent.data.toString()
+                monitorDataSource.moniterTargetPlayer(summonerName) { spectator ->
+                    if (spectator != null) {
+                        val date = DateTime.getNowDate()
+                        insertGameInfo(spectator, date)
+                        notifyForUser(summonerName, date)
+                    }
                 }
+
+                delay(50000L)
             }
         }
     }
@@ -86,20 +89,22 @@ class MonitorService : LifecycleService() {
 
         val notificationManager =
             getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        val channel = NotificationChannel(
-            notificationChannelId,
-            "게임 접속 알림",
-            NotificationManager.IMPORTANCE_HIGH
-        ).let {
-            it.description = "게임 접속 알림 서비스"
-            it.enableLights(true)
-            it.lightColor = Color.RED
-            it.enableVibration(true)
-            it.vibrationPattern = longArrayOf(100, 200, 300, 400, 500, 400, 300, 200, 100)
-            it
-        }
-        notificationManager.createNotificationChannel(channel)
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+
+            NotificationChannel(
+                notificationChannelId,
+                "게임 접속 알림",
+                NotificationManager.IMPORTANCE_HIGH
+            ).let {
+                it.description = "게임 접속 알림 서비스"
+                it.enableLights(true)
+                it.lightColor = Color.RED
+                it.enableVibration(true)
+                it.vibrationPattern = longArrayOf(100, 200, 300, 400, 500, 400, 300, 200, 100)
+                notificationManager.createNotificationChannel(it)
+            }
+        }
 
         val pendingIntent = Intent(this, AlarmActivity::class.java).let { intent ->
             PendingIntent.getActivity(this, 0, intent, 0)
@@ -115,6 +120,6 @@ class MonitorService : LifecycleService() {
                 .setTicker("게임 접속 감지!")
                 .build()
 
-        notificationManager.notify(0,notification)
+        notificationManager.notify(0, notification)
     }
 }

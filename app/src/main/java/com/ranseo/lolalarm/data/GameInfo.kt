@@ -11,7 +11,6 @@ data class GameInfo (
     @PrimaryKey
     @field:Json(name = "gameInfoId")
     val gameInfoId:Long,
-    @TypeConverters(SpectatorConverter::class)
     @field:Json(name ="spectator")
     val spectator : Spectator,
     @field:Json(name="timeStamp")
