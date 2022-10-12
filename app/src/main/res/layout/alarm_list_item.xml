@@ -9,7 +9,15 @@
             name="targetPlayer"
             type="com.ranseo.lolalarm.data.TargetPlayer" />
 
+        <variable
+            name="onClickListener"
+            type="com.ranseo.lolalarm.alarm.adapter.click.ClickAlarmItemListener" />
+
         <import type="android.view.View"/>
+
+        <variable
+            name="flag"
+            type="Boolean" />
 
     </data>
 
@@ -46,6 +54,7 @@
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_start"
+            android:visibility="@{flag ? View.VISIBLE : View.GONE}"
             android:text="시작"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -55,6 +64,7 @@
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_stop"
+            android:visibility="@{flag ? View.GONE : View.VISIBLE}"
             android:text="중지"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
