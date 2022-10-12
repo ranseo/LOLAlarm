@@ -8,6 +8,7 @@ import com.squareup.moshi.JsonClass
 @JsonClass(generateAdapter = true)
 @Entity(tableName = "game_info_table")
 data class GameInfo (
+    //gameInfoId == spectator.gameId
     @PrimaryKey
     @field:Json(name = "gameInfoId")
     val gameInfoId:Long,

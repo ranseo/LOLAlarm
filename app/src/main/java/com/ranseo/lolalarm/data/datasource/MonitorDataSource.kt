@@ -20,9 +20,9 @@ class MonitorDataSource @Inject constructor(
         alarmDAO.insertGameInfo(gameInfo)
     }
 
-    suspend fun moniterTargetPlayer(summonerName:String, callback:(spectator:Spectator?)->Unit) = withContext(Dispatchers.IO) {
+    suspend fun moniterTargetPlayer(summonerId:String, callback:(spectator:Spectator?)->Unit) = withContext(Dispatchers.IO) {
         try {
-            val spectator = lolApiService.getSpector(summonerName, api_key = com.ranseo.lolalarm.BuildConfig.LOL_API_KEY)
+            val spectator = lolApiService.getSpector(summonerId, api_key = com.ranseo.lolalarm.BuildConfig.LOL_API_KEY)
             callback(spectator)
         } catch (error:Exception) {
             error.printStackTrace()

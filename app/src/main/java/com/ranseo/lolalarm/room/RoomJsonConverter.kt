@@ -42,21 +42,21 @@ class SpectatorConverter @Inject constructor(private val moshi:Moshi) {
     }
 }
 
-@ProvidedTypeConverter
-class ParticipantsConverter @Inject constructor(private val moshi:Moshi) {
-
-    @TypeConverter
-    fun fromString(value: String) : List<Spectator.CurrentGameParticipant?>? {
-        val listType= Types.newParameterizedType(List::class.java, Spectator.CurrentGameParticipant::class.java)
-        val adapter : JsonAdapter<List<Spectator.CurrentGameParticipant>> = moshi.adapter(listType)
-        return adapter.fromJson(value)
-    }
-
-    @TypeConverter
-    fun fromParticipants(currentGameParticipant: List<Spectator.CurrentGameParticipant>) : String {
-        val listType= Types.newParameterizedType(List::class.java, Spectator.CurrentGameParticipant::class.java)
-        val adapter : JsonAdapter<List<Spectator.CurrentGameParticipant>> = moshi.adapter(listType)
-        return adapter.toJson(currentGameParticipant)
-    }
-}
+//@ProvidedTypeConverter
+//class ParticipantsConverter @Inject constructor(private val moshi:Moshi) {
+//
+//    @TypeConverter
+//    fun fromString(value: String) : List<Spectator.CurrentGameParticipant?>? {
+//        val listType= Types.newParameterizedType(List::class.java, Spectator.CurrentGameParticipant::class.java)
+//        val adapter : JsonAdapter<List<Spectator.CurrentGameParticipant>> = moshi.adapter(listType)
+//        return adapter.fromJson(value)
+//    }
+//
+//    @TypeConverter
+//    fun fromParticipants(currentGameParticipant: List<Spectator.CurrentGameParticipant>) : String {
+//        val listType= Types.newParameterizedType(List::class.java, Spectator.CurrentGameParticipant::class.java)
+//        val adapter : JsonAdapter<List<Spectator.CurrentGameParticipant>> = moshi.adapter(listType)
+//        return adapter.toJson(currentGameParticipant)
+//    }
+//}
 

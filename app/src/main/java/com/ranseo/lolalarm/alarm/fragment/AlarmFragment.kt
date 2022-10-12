@@ -16,12 +16,18 @@ import com.ranseo.lolalarm.alarm.viewmodel.AlarmViewModel
 import com.ranseo.lolalarm.data.ServiceIntentAction
 import com.ranseo.lolalarm.data.TargetPlayer
 import com.ranseo.lolalarm.databinding.FragmentAlarmBinding
+import com.ranseo.lolalarm.util.LogType
+import com.ranseo.lolalarm.util.log
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 
 @AndroidEntryPoint
 class AlarmFragment : Fragment() {
+
+    companion object {
+        private val TAG = "ALARM_FRAGMENT"
+    }
 
     private val viewModel: AlarmViewModel by viewModels()
     private lateinit var alarmListAdapter : AlarmListAdapter
@@ -42,7 +48,8 @@ class AlarmFragment : Fragment() {
             if (targetPlayer == null) {
                 stopMonitorService()
             } else {
-                startMonitorService(targetPlayer.summoner.name)
+                log(TAG, "clickAlarmItem targetPlayer: ${targetPlayer}", LogType.I)
+                startMonitorService(targetPlayer.summoner.id)
             }
         })
 
@@ -62,10 +69,10 @@ class AlarmFragment : Fragment() {
     }
 
 
-    fun startMonitorService(summonerName: String) {
+    fun startMonitorService(summonerId: String) {
         val intent = Intent(this.context, MonitorService::class.java).also {
             it.action = ServiceIntentAction.START.name
-            it.putExtra("SUMMONER_NAME", summonerName)
+            it.putExtra(requireContext().getString(R.string.extra_key_summoner_id), summonerId)
         }
 
         requireContext().startService(intent)

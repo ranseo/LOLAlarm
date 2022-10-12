@@ -2,10 +2,8 @@ package com.ranseo.lolalarm.di
 
 import android.content.Context
 import androidx.room.Room
-import com.ranseo.lolalarm.data.Spectator
 import com.ranseo.lolalarm.room.*
 import com.squareup.moshi.Moshi
-import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -23,8 +21,7 @@ object RoomDatabaseModule {
     fun provideDatabase(
         @ApplicationContext context: Context,
         spectatorConverter: SpectatorConverter,
-        summonerConverter: SummonerConverter,
-        participantsConverter: ParticipantsConverter
+        summonerConverter: SummonerConverter
     ): LOLAlarmAppDatabase {
         return Room.databaseBuilder(
             context,
@@ -32,7 +29,6 @@ object RoomDatabaseModule {
             "lol_alarm_database"
         )
             .fallbackToDestructiveMigration()
-            .addTypeConverter(participantsConverter)
             .addTypeConverter(spectatorConverter)
             .addTypeConverter(summonerConverter)
             .build()
@@ -49,9 +45,9 @@ object RoomDatabaseModule {
     @Singleton
     fun providesSpectatorConverter(moshi: Moshi): SpectatorConverter = SpectatorConverter(moshi)
 
-    @Provides
-    @Singleton
-    fun providesParticipantsConverter(moshi: Moshi): ParticipantsConverter =
-        ParticipantsConverter(moshi)
+//    @Provides
+//    @Singleton
+//    fun providesParticipantsConverter(moshi: Moshi): ParticipantsConverter =
+//        ParticipantsConverter(moshi)
 
 }

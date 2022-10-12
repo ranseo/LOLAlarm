@@ -8,7 +8,7 @@ import com.ranseo.lolalarm.data.Summoner
 import com.ranseo.lolalarm.data.TargetPlayer
 
 @Database(entities = [TargetPlayer::class, GameInfo::class], version = 6, exportSchema = false)
-@TypeConverters(value = [SpectatorConverter::class, SummonerConverter::class, ParticipantsConverter::class  ])
+@TypeConverters(value = [SpectatorConverter::class, SummonerConverter::class])
 abstract class LOLAlarmAppDatabase : RoomDatabase() {
     abstract fun alarmDao() : AlarmDAO
 }
