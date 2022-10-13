@@ -2,31 +2,31 @@ package com.ranseo.lolalarm.alarm.fragment
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import com.ranseo.lolalarm.MonitorService
 import com.ranseo.lolalarm.R
 import com.ranseo.lolalarm.alarm.adapter.AlarmListAdapter
 import com.ranseo.lolalarm.alarm.adapter.click.ClickAlarmItemListener
 import com.ranseo.lolalarm.alarm.viewmodel.AlarmViewModel
-import com.ranseo.lolalarm.data.ServiceIntentAction
-import com.ranseo.lolalarm.data.TargetPlayer
 import com.ranseo.lolalarm.databinding.FragmentAlarmBinding
+import com.ranseo.lolalarm.service.MonitorService
+import com.ranseo.lolalarm.service.ServiceIntentAction
+import com.ranseo.lolalarm.service.getMonitorServiceState
+import com.ranseo.lolalarm.service.setMonitorServiceState
 import com.ranseo.lolalarm.util.LogType
 import com.ranseo.lolalarm.util.log
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 
 @AndroidEntryPoint
 class AlarmFragment : Fragment() {
 
     companion object {
-        private val TAG = "ALARM_FRAGMENT"
+        private const val TAG = "ALARM_FRAGMENT"
     }
 
     private val viewModel: AlarmViewModel by viewModels()
@@ -44,14 +44,16 @@ class AlarmFragment : Fragment() {
             false
         )
 
-        alarmListAdapter = AlarmListAdapter(ClickAlarmItemListener{ targetPlayer ->
-            if (targetPlayer == null) {
-                stopMonitorService()
+        alarmListAdapter = AlarmListAdapter(ClickAlarmItemListener{ targetPlayer, flag ->
+            log(TAG, "clickAlarmItem targetPlayer: ${targetPlayer}", LogType.I)
+            if (flag) {
+                stopMonitorService(targetPlayer.summoner.id)
+                setMonitorServiceState(requireContext(), targetPlayer.summoner.name, ServiceIntentAction.STOP)
             } else {
-                log(TAG, "clickAlarmItem targetPlayer: ${targetPlayer}", LogType.I)
                 startMonitorService(targetPlayer.summoner.id)
+                setMonitorServiceState(requireContext(), targetPlayer.summoner.name, ServiceIntentAction.START)
             }
-        })
+        }, viewModel)
 
         binding.rvAlarm.adapter = alarmListAdapter
 
@@ -69,7 +71,7 @@ class AlarmFragment : Fragment() {
     }
 
 
-    fun startMonitorService(summonerId: String) {
+    private fun startMonitorService(summonerId: String) {
         val intent = Intent(this.context, MonitorService::class.java).also {
             it.action = ServiceIntentAction.START.name
             it.putExtra(requireContext().getString(R.string.extra_key_summoner_id), summonerId)
@@ -78,13 +80,15 @@ class AlarmFragment : Fragment() {
         requireContext().startService(intent)
     }
 
-    fun stopMonitorService() {
+    private fun stopMonitorService(summonerId: String) {
         val intent = Intent(this.context, MonitorService::class.java).also {
             it.action = ServiceIntentAction.STOP.name
+            it.putExtra(getString(R.string.extra_key_summoner_id), summonerId)
         }
 
-        requireContext().stopService(intent)
+        requireContext().startService(intent)
     }
+
 
 
 }

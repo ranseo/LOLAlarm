@@ -6,16 +6,17 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.ranseo.lolalarm.alarm.adapter.click.ClickAlarmItemListener
+import com.ranseo.lolalarm.alarm.viewmodel.AlarmViewModel
 import com.ranseo.lolalarm.data.TargetPlayer
 import com.ranseo.lolalarm.databinding.AlarmListItemBinding
 import com.ranseo.lolalarm.util.ProfileImage
 import javax.inject.Inject
 
-class AlarmListAdapter(private val clickAlarmItemListener: ClickAlarmItemListener) : ListAdapter<TargetPlayer, AlarmListAdapter.AlarmViewHolder>(TargetPlayer.getItemCallback()){
+class AlarmListAdapter(private val clickAlarmItemListener: ClickAlarmItemListener, private val viewModel: AlarmViewModel) : ListAdapter<TargetPlayer, AlarmListAdapter.AlarmViewHolder>(TargetPlayer.getItemCallback()){
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AlarmViewHolder {
-        return AlarmViewHolder.from(parent)
+        return AlarmViewHolder.from(parent, viewModel)
     }
 
 
@@ -25,16 +26,15 @@ class AlarmListAdapter(private val clickAlarmItemListener: ClickAlarmItemListene
     }
 
     
-    class AlarmViewHolder(val binding: AlarmListItemBinding) : RecyclerView.ViewHolder(binding.root) {
+    class AlarmViewHolder(val binding: AlarmListItemBinding, val viewModel: AlarmViewModel) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item:TargetPlayer, onClickListener:ClickAlarmItemListener) {
             binding.targetPlayer = item
             binding.onClickListener = onClickListener
-            binding.flag = true
+            binding.flag = viewModel.getServiceState(summonrName = item.summoner.name)
             binding.btnStart.setOnClickListener {
                 setBtnOnClickListener(onClickListener,false,item)
             }
             binding.btnStop.setOnClickListener {
-                onClickListener.onClickListener(binding.targetPlayer)
                 setBtnOnClickListener(onClickListener,true, item)
             }
 
@@ -42,16 +42,15 @@ class AlarmListAdapter(private val clickAlarmItemListener: ClickAlarmItemListene
         }
 
         private fun setBtnOnClickListener(onClickListener: ClickAlarmItemListener, flag: Boolean, item:TargetPlayer) {
-            if(!flag) onClickListener.onClick(item)
-            else onClickListener.onClick(null)
+            onClickListener.onClick(item, flag)
             binding.flag = flag
         }
 
         companion object {
-            fun from(parent: ViewGroup): AlarmViewHolder {
+            fun from(parent: ViewGroup, viewModel: AlarmViewModel): AlarmViewHolder {
                 val layoutInflater = LayoutInflater.from(parent.context)
                 val binding = AlarmListItemBinding.inflate(layoutInflater, parent, false)
-                return AlarmViewHolder(binding)
+                return AlarmViewHolder(binding, viewModel)
             }
         }
     }

@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:bind="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="gameInfo"
+            type="com.ranseo.lolalarm.data.GameInfo" />
+
+
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_view"
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        app:cardCornerRadius="4dp"
+        app:contentPadding="12dp"
+        app:cardBackgroundColor="@color/history_card_view_color"
+  >
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/iv_map"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scaleType="fitXY"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:src="@drawable/ic_launcher_background" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintTop_toBottomOf="@+id/iv_map"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/guideline_vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:orientation="vertical"
+                    android:weightSum="5">
+
+                    <include
+                        android:layout_weight="1"
+                        layout="@layout/history_particient_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        bind:participant="@{gameInfo.spectator.participants[0]}"/>
+                    <include
+                        android:layout_weight="1"
+                        layout="@layout/history_particient_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        bind:participant="@{gameInfo.spectator.participants[1]}"/>
+                    <include
+                        android:layout_weight="1"
+                        layout="@layout/history_particient_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        bind:participant="@{gameInfo.spectator.participants[2]}"/>
+                    <include
+                        android:layout_weight="1"
+                        layout="@layout/history_particient_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        bind:participant="@{gameInfo.spectator.participants[3]}"/>
+                    <include
+                        android:layout_weight="1"
+                        layout="@layout/history_particient_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        bind:participant="@{gameInfo.spectator.participants[4]}"/>
+                </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline_vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_constraintGuide_percent="0.5"
+                android:orientation="vertical"/>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintTop_toBottomOf="@+id/iv_map"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/guideline_vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:orientation="vertical"
+                    android:weightSum="5">
+
+                    <include
+                        android:layout_weight="1"
+                        layout="@layout/history_particient_layout_reverse_left_and_right"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        bind:participant="@{gameInfo.spectator.participants[5]}"/>
+
+                    <include
+                        android:layout_weight="1"
+                        layout="@layout/history_particient_layout_reverse_left_and_right"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        bind:participant="@{gameInfo.spectator.participants[6]}"/>
+
+                    <include
+                        android:layout_weight="1"
+                        layout="@layout/history_particient_layout_reverse_left_and_right"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        bind:participant="@{gameInfo.spectator.participants[7]}"/>
+
+                    <include
+                        android:layout_weight="1"
+                        layout="@layout/history_particient_layout_reverse_left_and_right"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        bind:participant="@{gameInfo.spectator.participants[8]}"/>
+
+                    <include
+                        android:layout_weight="1"
+                        layout="@layout/history_particient_layout_reverse_left_and_right"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        bind:participant="@{gameInfo.spectator.participants[9]}"/>
+                </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+
+    </androidx.cardview.widget.CardView>
+
+</layout>
