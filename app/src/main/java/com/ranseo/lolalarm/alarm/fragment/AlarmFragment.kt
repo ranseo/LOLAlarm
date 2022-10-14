@@ -8,10 +8,12 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.ranseo.lolalarm.R
 import com.ranseo.lolalarm.alarm.adapter.AlarmListAdapter
 import com.ranseo.lolalarm.alarm.adapter.click.ClickAlarmItemListener
 import com.ranseo.lolalarm.alarm.viewmodel.AlarmViewModel
+import com.ranseo.lolalarm.data.TargetPlayer
 import com.ranseo.lolalarm.databinding.FragmentAlarmBinding
 import com.ranseo.lolalarm.service.MonitorService
 import com.ranseo.lolalarm.service.ServiceIntentAction
@@ -30,7 +32,7 @@ class AlarmFragment : Fragment() {
     }
 
     private val viewModel: AlarmViewModel by viewModels()
-    private lateinit var alarmListAdapter : AlarmListAdapter
+    private lateinit var alarmListAdapter: AlarmListAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -44,16 +46,38 @@ class AlarmFragment : Fragment() {
             false
         )
 
-        alarmListAdapter = AlarmListAdapter(ClickAlarmItemListener{ targetPlayer, flag ->
-            log(TAG, "clickAlarmItem targetPlayer: ${targetPlayer}", LogType.I)
-            if (flag) {
-                stopMonitorService(targetPlayer.summoner.id)
-                setMonitorServiceState(requireContext(), targetPlayer.summoner.name, ServiceIntentAction.STOP)
-            } else {
-                startMonitorService(targetPlayer.summoner.id)
-                setMonitorServiceState(requireContext(), targetPlayer.summoner.name, ServiceIntentAction.START)
+        val onItemViewClickListener: (targetPlayer: TargetPlayer) -> Unit = {
+            findNavController().navigate(
+                AlarmFragmentDirections.actionAlarmToHistory(it)
+            )
+        }
+
+        val onServiceBtnClickListener: (targetPlayer: TargetPlayer, flag: Boolean) -> Unit =
+            { targetPlayer, flag ->
+                log(TAG, "clickAlarmItem targetPlayer: ${targetPlayer}", LogType.I)
+                if (flag) {
+                    stopMonitorService(targetPlayer.summoner.id)
+                    setMonitorServiceState(
+                        requireContext(),
+                        targetPlayer.summoner.name,
+                        ServiceIntentAction.STOP
+                    )
+                } else {
+                    startMonitorService(targetPlayer.summoner.id)
+                    setMonitorServiceState(
+                        requireContext(),
+                        targetPlayer.summoner.name,
+                        ServiceIntentAction.START
+                    )
+                }
             }
-        }, viewModel)
+
+        alarmListAdapter = AlarmListAdapter(
+            ClickAlarmItemListener(
+                onItemViewClickListener,
+                onServiceBtnClickListener
+            ), viewModel
+        )
 
         binding.rvAlarm.adapter = alarmListAdapter
 
@@ -88,7 +112,6 @@ class AlarmFragment : Fragment() {
 
         requireContext().startService(intent)
     }
-
 
 
 }

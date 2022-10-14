@@ -9,6 +9,7 @@
             name="viewModel"
             type="com.ranseo.lolalarm.alarm.viewmodel.HistoryViewModel" />
 
+
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -20,23 +21,26 @@
             android:id="@+id/collapsing_appBar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="top">
+            android:fitsSystemWindows="true">
 
             <com.google.android.material.appbar.CollapsingToolbarLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:collapsedTitleTextColor="@color/white"
-                app:layout_scrollFlags="enterAlwaysCollapsed">
+                android:fitsSystemWindows="true"
+                tools:title="사랑이란"
+                android:title="@{viewModel.currentPlayer.summoner.name}"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
                 <include
                     layout="@layout/history_collapsing_parallx_layout"
-                    bind:participant="@{}"
+                    bind:currentPlayer="@{viewModel.currentPlayer.summoner}"
+                    bind:latestGameTime="@{viewModel.latestGameTime}"
+                    app:layout_collapseMode="parallax"
+                    android:adjustViewBounds="true"
                     />
 
                 <androidx.appcompat.widget.Toolbar
                     android:id="@+id/toolbar"
-                    tools:title="사랑이란"
-                    app:titleTextColor="@color/black"
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
                     app:layout_collapseMode="pin"/>
@@ -52,7 +56,9 @@
             android:id="@+id/rec_history"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="?attr/actionBarSize"
+            android:layout_marginBottom="?attr/actionBarSize"
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

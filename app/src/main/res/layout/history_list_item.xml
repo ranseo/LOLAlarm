@@ -14,7 +14,7 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/card_view"
         android:layout_width="match_parent"
-        android:layout_height="400dp"
+        android:layout_height="450dp"
         app:cardCornerRadius="4dp"
         app:contentPadding="12dp"
         app:cardBackgroundColor="@color/history_card_view_color"
@@ -23,20 +23,67 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <ImageView
-                android:id="@+id/iv_map"
+            <androidx.coordinatorlayout.widget.CoordinatorLayout
+                android:id="@+id/map_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:scaleType="fitXY"
+                android:src="@drawable/ic_launcher_background"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:src="@drawable/ic_launcher_background" />
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/iv_map"
+                    android:layout_width="match_parent"
+                    android:layout_height="180dp"
+                    android:scaleType="fitXY"
+                    tools:src="@drawable/ic_launcher_background" />
+
+                <androidx.constraintlayout.utils.widget.MockView
+                    android:layout_width="match_parent"
+                    android:layout_height="180dp"
+                    android:elevation="3dp"
+                    android:background="@color/mock_view_on_map_color"
+                    />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="140dp"
+                    android:elevation="4dp"
+                    android:theme="@style/InfoOnTheMiniMap"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_map"
+                        tools:text="지도 : 소환사의 협곡"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:elevation="4dp"/>
+
+                    <TextView
+                        android:id="@+id/tv_start_time"
+                        tools:text="시작 : 2022년 10월 14일 14시 42분"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <TextView
+                        android:id="@+id/tv_game_mode"
+                        tools:text="게임 모드 : 랭크 게임"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                </LinearLayout>
+
+
+            </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                app:layout_constraintTop_toBottomOf="@+id/iv_map"
+                android:layout_marginTop="12dp"
+                app:layout_constraintTop_toBottomOf="@+id/map_layout"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/guideline_vertical">
@@ -57,7 +104,8 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                app:layout_constraintTop_toBottomOf="@+id/iv_map"
+                android:layout_marginTop="12dp"
+                app:layout_constraintTop_toBottomOf="@+id/map_layout"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/guideline_vertical">

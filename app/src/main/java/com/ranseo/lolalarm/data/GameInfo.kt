@@ -18,7 +18,10 @@ data class GameInfo (
     val spectator : Spectator,
     @field:Json(name="timeStamp")
     @ColumnInfo(name = "time_stamp")
-    val timeStamp : String
+    val timeStamp : String,
+    @field:Json(name="playerId")
+    @ColumnInfo(name="playerId")
+    val playerId: String
 ) {
     companion object {
         private val callback = object: DiffUtil.ItemCallback<GameInfo>() {

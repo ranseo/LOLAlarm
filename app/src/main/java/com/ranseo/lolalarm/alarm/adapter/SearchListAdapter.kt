@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ranseo.lolalarm.alarm.adapter.click.ClickSearchItemListener
 import com.ranseo.lolalarm.data.Summoner
 import com.ranseo.lolalarm.databinding.SearchListItemBinding
-import com.ranseo.lolalarm.util.GetImageFromUrl
+import com.ranseo.lolalarm.util.ImageFromUrl
 
 class SearchListAdapter (
     private val onClickListener: ClickSearchItemListener
@@ -26,7 +26,7 @@ class SearchListAdapter (
         fun bind(item:Summoner, clickListener:ClickSearchItemListener ) {
             binding.summoner = item
             binding.clickListener = clickListener
-            GetImageFromUrl.setProfileImageView(GetImageFromUrl.getProfileImageUrl(item.profileIconId), binding.root, binding.ivProfile)
+            ImageFromUrl.setProfileImageView(ImageFromUrl.getProfileImageUrl(item.profileIconId), binding.root, binding.ivProfile)
         }
 
         companion object {

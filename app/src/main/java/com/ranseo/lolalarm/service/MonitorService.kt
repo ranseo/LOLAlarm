@@ -52,7 +52,7 @@ class MonitorService : LifecycleService() {
             when (intent.action) {
                 ServiceIntentAction.START.name -> {
                     refreshLastStartId(startId)
-                    if(count==1) startForeground(1, notifyForeground())
+                    if(count==1) startForeground(startId, notifyForeground())
                     startMonitor(intent)
                 }
                 ServiceIntentAction.STOP.name -> {
@@ -119,7 +119,7 @@ class MonitorService : LifecycleService() {
                     log(TAG, "startMonitor : ${spectator}", LogType.I)
                     if (spectator != null) {
                         val date = DateTime.getNowDate()
-                        insertGameInfo(spectator, date)
+                        insertGameInfo(spectator, date, summonerId)
                         notifyForUser(spectator.participants.filter { participant -> participant.summonerId == summonerId }
                             .first().summonerName, date)
                     }
@@ -131,9 +131,9 @@ class MonitorService : LifecycleService() {
         }
     }
 
-    private fun insertGameInfo(spectator: Spectator, date: String) {
+    private fun insertGameInfo(spectator: Spectator, date: String, playerId:String) {
         lifecycleScope.launch(Dispatchers.IO) {
-            val gameInfo = GameInfo(spectator.gameId, spectator, date)
+            val gameInfo = GameInfo(spectator.gameId, spectator, date, playerId)
             monitorDataSource.insertGameInfo(gameInfo)
         }
     }

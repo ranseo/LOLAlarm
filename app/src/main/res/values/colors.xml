@@ -7,7 +7,10 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
     <color name="start_btn_color">#08FF00</color>
     <color name="stop_btn_color">#FF0000</color>
     <color name="history_card_view_color">#3C8E8E8E</color>
+
+    <color name="mock_view_on_map_color">#63707070</color>
 </resources>

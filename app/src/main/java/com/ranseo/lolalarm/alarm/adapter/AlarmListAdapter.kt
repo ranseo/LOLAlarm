@@ -8,7 +8,7 @@ import com.ranseo.lolalarm.alarm.adapter.click.ClickAlarmItemListener
 import com.ranseo.lolalarm.alarm.viewmodel.AlarmViewModel
 import com.ranseo.lolalarm.data.TargetPlayer
 import com.ranseo.lolalarm.databinding.AlarmListItemBinding
-import com.ranseo.lolalarm.util.GetImageFromUrl
+import com.ranseo.lolalarm.util.ImageFromUrl
 
 class AlarmListAdapter(private val clickAlarmItemListener: ClickAlarmItemListener, private val viewModel: AlarmViewModel) : ListAdapter<TargetPlayer, AlarmListAdapter.AlarmViewHolder>(TargetPlayer.getItemCallback()){
 
@@ -36,7 +36,8 @@ class AlarmListAdapter(private val clickAlarmItemListener: ClickAlarmItemListene
                 setBtnOnClickListener(onClickListener,true, item)
             }
 
-            GetImageFromUrl.setProfileImageView(GetImageFromUrl.getProfileImageUrl(item.summoner.profileIconId), binding.root, binding.ivProfile)
+
+            ImageFromUrl.setProfileImageView(ImageFromUrl.getProfileImageUrl(item.summoner.profileIconId), binding.root, binding.ivProfile)
         }
 
         private fun setBtnOnClickListener(onClickListener: ClickAlarmItemListener, flag: Boolean, item:TargetPlayer) {

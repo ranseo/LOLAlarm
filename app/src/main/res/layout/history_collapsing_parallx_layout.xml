@@ -7,8 +7,12 @@
     <data>
 
         <variable
-            name="participant"
-            type="com.ranseo.lolalarm.data.CurrentGameParticipant" />
+            name="currentPlayer"
+            type="com.ranseo.lolalarm.data.Summoner" />
+
+        <variable
+            name="latestGameTime"
+            type="String" />
 
     </data>
 
@@ -20,11 +24,11 @@
 
         <include
             android:id="@+id/profile_layout"
-            layout="@layout/history_particient_layout"
+            layout="@layout/history_current_player_layout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            bind:participant="@{participant}" />
+            bind:currentPlayer="@{currentPlayer}" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -44,6 +48,7 @@
                 android:layout_weight="0"/>
 
             <TextView
+                android:text="@{latestGameTime}"
                 tools:text="2022년 10월 14일 오전 11시 49분"
                 android:textColor="@color/black"
                 android:layout_weight="1"

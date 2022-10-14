@@ -16,13 +16,18 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-@HiltViewModel
 class HistoryViewModel @AssistedInject constructor(
     historyRepositery: HistoryRepositery,
     @Assisted private val targetPlayer: TargetPlayer
 ) : ViewModel() {
 
-    val gameInfos = historyRepositery.gameInfos
+    val gameInfos = historyRepositery.getGameInfos(targetPlayer.targetId)
+    val currentPlayer = targetPlayer
+    val latestGameTime = Transformations.map(gameInfos) {
+        if(!it.isNullOrEmpty()) {
+            it[0].timeStamp
+        } else ""
+    }
 
     @dagger.assisted.AssistedFactory
     interface AssistedFactory {

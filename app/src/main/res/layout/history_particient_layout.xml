@@ -7,7 +7,7 @@
 
         <variable
             name="participant"
-            type="com.ranseo.lolalarm.data.CurrentGameParticipant" />
+            type="com.ranseo.lolalarm.data.Spectator.CurrentGameParticipant" />
 
     </data>
 
@@ -19,6 +19,7 @@
 
         <ImageView
             android:id="@+id/iv_profile"
+            setImage="@{participant.profileIconId}"
             android:layout_width="38dp"
             android:layout_height="38dp"
             android:background="@drawable/layer_list_profile_circle"

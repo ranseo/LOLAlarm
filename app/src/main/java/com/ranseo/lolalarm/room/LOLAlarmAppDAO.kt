@@ -1,14 +1,12 @@
 package com.ranseo.lolalarm.room
 
 import androidx.lifecycle.LiveData
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
+import androidx.room.*
 import androidx.room.OnConflictStrategy.REPLACE
-import androidx.room.Query
 import com.ranseo.lolalarm.data.GameInfo
 import com.ranseo.lolalarm.data.Spectator
 import com.ranseo.lolalarm.data.TargetPlayer
+import com.ranseo.lolalarm.data.TargetPlayerAndGameInfo
 
 @Dao
 interface AlarmDAO {
@@ -36,6 +34,10 @@ interface AlarmDAO {
     fun getAllGameInfo() : LiveData<List<GameInfo>>
 
 
+    //TargetPlayerAndGameInfos
+    @Transaction
+    @Query("SELECT * FROM target_player_table")
+    fun getTargetPlayersWithGameInfoLists() : LiveData<List<TargetPlayerAndGameInfo>>
 
 
 }

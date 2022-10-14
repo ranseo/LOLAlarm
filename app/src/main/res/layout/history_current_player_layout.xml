@@ -6,40 +6,41 @@
     <data>
 
         <variable
-            name="participant"
-            type="com.ranseo.lolalarm.data.Spectator.CurrentGameParticipant" />
+            name="currentPlayer"
+            type="com.ranseo.lolalarm.data.Summoner" />
 
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-     >
+        android:background="@color/white"
+        android:padding="12dp">
 
 
         <ImageView
             android:id="@+id/iv_profile"
-            android:layout_width="38dp"
-            android:layout_height="38dp"
-            setImage="@{participant.profileIconId}"
+            setImage="@{currentPlayer.profileIconId}"
+            android:layout_width="52dp"
+            android:layout_height="52dp"
             android:background="@drawable/layer_list_profile_circle"
             android:clipToOutline="true"
             android:scaleType="fitCenter"
-            tools:src="@drawable/ic_launcher_background"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            tools:src="@drawable/ic_launcher_background" />
 
 
         <TextView
-            android:text="@{participant.summonerName}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="12sp"
-            app:layout_constraintEnd_toStartOf="@+id/iv_profile"
+            android:layout_marginStart="12dp"
+            android:text="@{currentPlayer.name}"
+            android:textSize="20sp"
+            app:layout_constraintStart_toEndOf="@+id/iv_profile"
             app:layout_constraintTop_toTopOf="@+id/iv_profile"
-            android:layout_marginEnd="12dp"
-            tools:text="사랑이란"/>
+            tools:text="사랑이란" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
