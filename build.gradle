@@ -7,10 +7,12 @@ buildscript {
     ext.glide_version = "4.14.1"
     ext.lifecycle_version = "2.5.1"
     ext.arch_version = "2.1.0"
+    ext.nav_version = "2.5.2"
 
     dependencies {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.7.10"
         classpath "com.google.dagger:hilt-android-gradle-plugin:$hilt_version"
+        classpath("androidx.navigation:navigation-safe-args-gradle-plugin:$nav_version")
     }
 }
 

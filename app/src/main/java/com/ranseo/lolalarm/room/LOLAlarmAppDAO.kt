@@ -13,6 +13,8 @@ import com.ranseo.lolalarm.data.TargetPlayer
 @Dao
 interface AlarmDAO {
 
+    //Alarm
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertTargetPlayer(targetPlayer: TargetPlayer)
 
@@ -22,7 +24,7 @@ interface AlarmDAO {
     @Query("SELECT * FROM target_player_table ORDER BY targetId DESC")
     fun getAll() : LiveData<List<TargetPlayer>>
 
-    //Spectator
+    //GameInfo
 
     @Insert(onConflict = REPLACE)
     suspend fun insertGameInfo(gameInfo: GameInfo)
@@ -32,5 +34,8 @@ interface AlarmDAO {
 
     @Query("SELECT * FROM game_info_table ORDER BY time_stamp DESC LIMIT 5")
     fun getAllGameInfo() : LiveData<List<GameInfo>>
+
+
+
 
 }

@@ -6,11 +6,14 @@
         <entry key="..\:/Users/aa/Desktop/LOLAlarm/app/src/main/res/drawable/layer_list_profile_circle.xml" value="0.1735" />
         <entry key="..\:/Users/aa/Desktop/LOLAlarm/app/src/main/res/layout/activity_alarm.xml" value="0.1828125" />
         <entry key="..\:/Users/aa/Desktop/LOLAlarm/app/src/main/res/layout/alarm_list_item.xml" value="0.25" />
+        <entry key="..\:/Users/aa/Desktop/LOLAlarm/app/src/main/res/layout/blue_team_five_participants_layout.xml" value="0.25" />
         <entry key="..\:/Users/aa/Desktop/LOLAlarm/app/src/main/res/layout/fragment_alarm.xml" value="0.1828125" />
-        <entry key="..\:/Users/aa/Desktop/LOLAlarm/app/src/main/res/layout/fragment_history.xml" value="0.28020833333333334" />
-        <entry key="..\:/Users/aa/Desktop/LOLAlarm/app/src/main/res/layout/history_list_item.xml" value="0.33" />
+        <entry key="..\:/Users/aa/Desktop/LOLAlarm/app/src/main/res/layout/fragment_history.xml" value="0.33" />
+        <entry key="..\:/Users/aa/Desktop/LOLAlarm/app/src/main/res/layout/history_collapsing_parallx_layout.xml" value="0.33" />
+        <entry key="..\:/Users/aa/Desktop/LOLAlarm/app/src/main/res/layout/history_list_item.xml" value="0.25" />
         <entry key="..\:/Users/aa/Desktop/LOLAlarm/app/src/main/res/layout/history_particient_layout.xml" value="0.28020833333333334" />
         <entry key="..\:/Users/aa/Desktop/LOLAlarm/app/src/main/res/layout/history_particient_layout_reverse_left_and_right.xml" value="0.25" />
+        <entry key="..\:/Users/aa/Desktop/LOLAlarm/app/src/main/res/layout/read_team_five_participants_layout.xml" value="0.22" />
         <entry key="..\:/Users/aa/Desktop/LOLAlarm/app/src/main/res/layout/search_list_item.xml" value="0.28020833333333334" />
         <entry key="..\:/Users/aa/Desktop/LOLAlarm/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.1" />
         <entry key="..\:/Users/aa/Desktop/developMent/LOLAlarm/app/src/main/res/layout/activity_alarm.xml" value="0.33" />

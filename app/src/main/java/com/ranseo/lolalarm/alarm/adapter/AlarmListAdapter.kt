@@ -1,7 +1,6 @@
 package com.ranseo.lolalarm.alarm.adapter
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -9,8 +8,7 @@ import com.ranseo.lolalarm.alarm.adapter.click.ClickAlarmItemListener
 import com.ranseo.lolalarm.alarm.viewmodel.AlarmViewModel
 import com.ranseo.lolalarm.data.TargetPlayer
 import com.ranseo.lolalarm.databinding.AlarmListItemBinding
-import com.ranseo.lolalarm.util.ProfileImage
-import javax.inject.Inject
+import com.ranseo.lolalarm.util.GetImageFromUrl
 
 class AlarmListAdapter(private val clickAlarmItemListener: ClickAlarmItemListener, private val viewModel: AlarmViewModel) : ListAdapter<TargetPlayer, AlarmListAdapter.AlarmViewHolder>(TargetPlayer.getItemCallback()){
 
@@ -38,7 +36,7 @@ class AlarmListAdapter(private val clickAlarmItemListener: ClickAlarmItemListene
                 setBtnOnClickListener(onClickListener,true, item)
             }
 
-            ProfileImage.setProfileImageView(ProfileImage.getProfileImageUrl(item.summoner.profileIconId), binding.root, binding.ivProfile)
+            GetImageFromUrl.setProfileImageView(GetImageFromUrl.getProfileImageUrl(item.summoner.profileIconId), binding.root, binding.ivProfile)
         }
 
         private fun setBtnOnClickListener(onClickListener: ClickAlarmItemListener, flag: Boolean, item:TargetPlayer) {

@@ -11,12 +11,27 @@
         tools:layout="@layout/fragment_alarm"
         >
 
+        <action
+            android:id="@+id/action_alarm_to_history"
+            app:destination="@+id/history_fragment"/>
+
     </fragment>
 
     <fragment
         android:id="@+id/search_fragment"
         android:name="com.ranseo.lolalarm.alarm.fragment.SearchFragment"
         tools:layout="@layout/fragment_search">
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/history_fragment"
+        android:name="com.ranseo.lolalarm.alarm.fragment.HistoryFragment"
+        tools:layout="@layout/fragment_history">
+
+        <argument
+            android:name="targetPlayer"
+            app:argType="com.ranseo.lolalarm.data.TargetPlayer"/>
 
     </fragment>
 
