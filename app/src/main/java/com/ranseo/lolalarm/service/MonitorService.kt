@@ -7,6 +7,7 @@ import android.graphics.Color
 import android.os.Build
 import android.os.IBinder
 import androidx.annotation.CallSuper
+import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import androidx.lifecycle.LifecycleService
 import androidx.lifecycle.lifecycleScope
@@ -27,7 +28,6 @@ class MonitorService : LifecycleService() {
 
     private val TAG = "MONITOR_SERVICE"
     private lateinit var hashLoopFlag: HashMap<String, Boolean>
-    private var lastStartId: Int = 0
     private var count: Int = 0
 
     @Inject
@@ -51,8 +51,8 @@ class MonitorService : LifecycleService() {
         if (intent != null) {
             when (intent.action) {
                 ServiceIntentAction.START.name -> {
-                    refreshLastStartId(startId)
-                    if(count==1) startForeground(startId, notifyForeground())
+                    if(count==0) startForeground(startId, notifyForeground())
+                    refreshLastStartId()
                     startMonitor(intent)
                 }
                 ServiceIntentAction.STOP.name -> {
@@ -74,9 +74,8 @@ class MonitorService : LifecycleService() {
         return START_STICKY
     }
 
-    private fun refreshLastStartId(startId: Int) {
-        log(TAG,"refreshLastStartId() startId : ${startId}",LogType.I)
-        lastStartId = startId
+    private fun refreshLastStartId() {
+        log(TAG,"refreshLastStartId()",LogType.I)
         count++
     }
 
@@ -112,8 +111,13 @@ class MonitorService : LifecycleService() {
 
         lifecycleScope.launch(Dispatchers.IO) {
 
+            val flag = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                hashLoopFlag.getOrDefault(summonerId, false)
+            } else {
+                if(hashLoopFlag.containsKey(summonerId)) hashLoopFlag[summonerId] else false
+            }
 
-            while (hashLoopFlag[summonerId]!!) {
+            while (flag!!) {
                 log(TAG, "startMonitor summonerId : ${summonerId}", LogType.I)
                 monitorDataSource.moniterTargetPlayer(summonerId) { spectator ->
                     log(TAG, "startMonitor : ${spectator}", LogType.I)
