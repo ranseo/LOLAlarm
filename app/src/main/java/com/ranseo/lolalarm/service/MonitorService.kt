@@ -16,6 +16,7 @@ import com.ranseo.lolalarm.alarm.AlarmActivity
 import com.ranseo.lolalarm.data.GameInfo
 import com.ranseo.lolalarm.data.Spectator
 import com.ranseo.lolalarm.data.datasource.MonitorDataSource
+import com.ranseo.lolalarm.receiver.StopServiceReceiver
 import com.ranseo.lolalarm.util.DateTime
 import com.ranseo.lolalarm.util.LogType
 import com.ranseo.lolalarm.util.log
@@ -54,6 +55,7 @@ class MonitorService : LifecycleService() {
                     if(count==0) startForeground(startId, notifyForeground())
                     refreshLastStartId()
                     startMonitor(intent)
+                    sendBroadcast()
                 }
                 ServiceIntentAction.STOP.name -> {
                     count--
@@ -145,8 +147,6 @@ class MonitorService : LifecycleService() {
 
     private fun notifyForUser(summonerName: String, date: String) {
         val notificationChannelId = "게임 접속 알림 서비스 채널"
-
-
         val notificationManager =
             getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
@@ -221,5 +221,10 @@ class MonitorService : LifecycleService() {
                 .setSmallIcon(R.drawable.ic_launcher_foreground)
                 .build()
         return notification
+    }
+
+    private fun sendBroadcast() {
+        val intent = Intent(this, StopServiceReceiver::class.java)
+        sendBroadcast(intent)
     }
 }

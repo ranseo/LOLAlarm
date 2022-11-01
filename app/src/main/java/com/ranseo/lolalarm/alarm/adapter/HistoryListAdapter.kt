@@ -54,7 +54,7 @@ class HistoryListAdapter @Inject constructor(val moshi: Moshi, @ApplicationConte
 
             if(maps.isNullOrEmpty()) return
             log("HistoryViewHolder", "mapId : ${item.mapId}", LogType.I)
-            val mapInfo = maps.first { maps -> maps.mapId == item.mapId.toInt() }
+            val mapInfo = maps.first { v -> v.mapId == item.mapId.toInt() }
             binding.tvMap.text = mapInfo.mapName
             binding.tvStartTime.text = DateTime.getNowDate(item.gameStartTime)
             binding.tvGameMode.text = item.gameType

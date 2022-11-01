@@ -9,6 +9,7 @@ enum class ServiceIntentAction {
     STOP
 }
 
+
 private const val NAME = "MONITOR_SERVICE_KEY"
 
 fun setMonitorServiceState(context: Context, key: String, state: ServiceIntentAction) {
